@@ -3,9 +3,11 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-io.configure () ->
+const port = process.env.PORT || 3000;
+
+io.configure (() ->
   io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10);
+  io.set("polling duration", 10));
 
 const maxMessages = 40;
 const initialMessage = {
@@ -31,6 +33,6 @@ io.on('connection', function(socket) {
     });
 });
 
-server.listen(25565, function() {
-    console.log("Servidor corriendo en http://localhost:25565");
+server.listen(port, function() {
+    console.log(`Servidor corriendo en ${port}`);
 });
