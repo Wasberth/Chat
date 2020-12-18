@@ -18,12 +18,14 @@ function render(data) {
 }
 
 function addMessage() {
-    if (document.getElementById('texto').value != '') {
+    if (document.getElementById('texto').value != '' && document.getElementById('username').value != '') {
         var message = {
             author: document.getElementById('username').value,
             text: document.getElementById('texto').value
         };
         document.getElementById('texto').value = '';
         socket.emit('new-message', message);
+    } else {
+        alert('Ni el nombre ni el mensaje pueden estar vacíos');
     }
 }

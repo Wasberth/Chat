@@ -20,12 +20,15 @@ io.on('connection', function(socket) {
     socket.emit('messages', messages);
 
     socket.on('new-message', function(data) {
-        while (messages.length >= maxMessages) {
-            messages.shift();
-        }
-        messages.push(data);
+        if (data.author != "" && data.text != "") {
+            while (messages.length >= maxMessages) {
+                messages.shift();
+            }
+            data.text = data.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            messages.push(data);
 
-        io.sockets.emit('messages', messages);
+            io.sockets.emit('messages', messages);
+        }
     });
 });
 
