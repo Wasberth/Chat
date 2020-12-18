@@ -3,6 +3,10 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+io.configure () ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10);
+
 const maxMessages = 40;
 const initialMessage = {
     text: "Este es mi chat en Node.js. Con fin de optimizar el envío de mensajes, el máximo aceptado es " + maxMessages + " y una vez llegado ese límite los primeros mensajes serán eliminados.",
